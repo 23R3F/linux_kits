@@ -360,10 +360,11 @@ install_sth()
             5) #angr
                 mkdir ~/angr_project && cd ~/angr_project
                 sudo apt-get install python3-dev libffi-dev build-essential virtualenvwrapper
-                virtualenv --clear --no-site-packages --python=python3.5 angr_env
+                virtualenv --python=python3.5 angr_env
                 source ./angr_env/bin/activate
                 echo "alias angr_env='source ~/angr_project/angr_env/bin/activate'" > ~/.bashrc
-                pip install angr
+                source ~/.bashrc
+                pip install angr==8.19.10.30
                 green_echo "has install angr in virtual python env\nyou can use 'angr_env' to switch"
             ;;
             6) #afl-fuzz
