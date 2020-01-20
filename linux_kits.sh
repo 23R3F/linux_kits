@@ -371,7 +371,7 @@ choice()
             ;;
             5)  restart_net
             ;;
-            6)  menu_install
+            6)  install_sth
             ;;
             7)  configure_git
             ;;
