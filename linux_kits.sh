@@ -95,7 +95,7 @@ welcome()
     #     echo "you should run with 'sudo ./linux_kits.sh'"
     #     exit
     # fi
-    red_echo "Welcome To Use 23R3F 's Linux Kits\n"
+    red_echo "Welcome To Use 23R3F 's Linux Kits(ubuntu16.04)\n"
 }
 
 add_user()
@@ -211,10 +211,7 @@ restart_net()
     echo ""
 }
 
-install_sth()
-{
-    echo "a"
-}
+
 configure_git()
 {
     if [[ ! -e "/usr/bin/git" ]];then
@@ -276,6 +273,86 @@ menu()
     blue_echo "(input 'exit' to exit)"
 }
 
+menu_install()
+{
+    blue_echo "[1]pwntools"
+    blue_echo "[2]pwnGDB"
+    blue_echo "[3]pwndbg"
+    blue_echo "[4]edit gdbinit"
+    blue_echo "[5]libc for 32-bits"
+    blue_echo "[6]ROPgadget"
+    blue_echo "[7]onegadget"
+    blue_echo "[8]angr"
+    blue_echo "[0]return last menu"
+
+}
+
+install_sth()
+{
+    while :
+    do
+        menu_install
+        red_echo "input your num:"
+        read num
+        case $num in
+            0)  
+                return 0
+            ;;
+            1) #pwntools
+                sudo apt-get install python-dev
+                sudo apt-get -y install python python-pip
+                sudo apt-get install python2.7 python-pip python-dev git libssl-dev libffi-dev build-essential
+                sudo pip install --upgrade pip
+                sudo pip install pwntools
+            ;;
+            2) #pwnGDB
+                cd ~
+                git clone https://github.com/scwuaptx/Pwngdb.git 
+                cp ~/Pwngdb/.gdbinit ~/
+            ;;
+            3) #pwndbg
+                cd ~
+                git clone https://github.com/pwndbg/pwndbg
+                cd pwndbg
+                sudo ./setup.sh
+            ;;
+            4) #edit gdbinit
+                sudo rm ~/.gdbinit
+                touch ~/.gdbinit
+                echo "source ~/pwndbg/gdbinit.py" >> ~/.gdbinit
+                echo "source ~/Pwngdb/angelheap/gdbinit.py ">> ~/.gdbinit
+                echo "source ~/Pwngdb/pwngdb.py >> "~/.gdbinit
+                echo "define hook-run ">> ~/.gdbinit
+                echo "python ">> ~/.gdbinit
+                echo "import angelheap ">> ~/.gdbinit
+                echo "angelheap.init_angelheap() ">> ~/.gdbinit
+                echo "end ">> ~/.gdbinit
+                echo "end ">> ~/.gdbinit
+            ;;
+            5) #libc for 32-bits
+                dpkg --add-architecture i386
+                sudo apt-get update
+                sudo apt-get pip
+                sudo apt-get -y install lib32z1 lib32ncurses5
+                sudo apt-get source libc6-dev
+            ;;
+            6) #ROPgadget
+                sudo pip install capstone
+                python setup.py install
+
+            ;;
+            7) #onegadget
+                sudo apt install ruby
+                sudo gem install one_gadget
+            ;;
+            8) #angr
+                echo "angr!"
+            ;;
+            *)  red_echo 'error input!'
+            ;;
+        esac
+    done
+}
 choice()
 {
     while :
@@ -294,7 +371,7 @@ choice()
             ;;
             5)  restart_net
             ;;
-            6)  install_sth
+            6)  menu_install
             ;;
             7)  configure_git
             ;;
