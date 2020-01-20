@@ -91,17 +91,10 @@ system_msg()
 
 welcome()
 {
-<<<<<<< HEAD
     # if [ `whoami` != "root" ];then
     #     echo "you should run with 'sudo ./linux_kits.sh'"
     #     exit
     # fi
-=======
-    if [ `whoami` != "root" ];then
-        echo "you should run with 'sudo ./linux_kits.sh'"
-        exit
-    fi
->>>>>>> 38a94af5892e04c79d488f1112a4c107cfe41abf
     red_echo "Welcome To Use 23R3F 's Linux Kits\n"
 }
 
@@ -133,13 +126,8 @@ recovery_apt()
 
     read restr
     if [[ $restr == "y" ]] || [[ $restr == "Y" ]];then
-<<<<<<< HEAD
         sudo rm -f /etc/apt/sources.list
         sudo mv /etc/apt/sources.list_backup /etc/apt/sources.list
-=======
-        rm /etc/apt/sources.list
-        mv /etc/apt/sources.list_backup /etc/apt/sources.list
->>>>>>> 38a94af5892e04c79d488f1112a4c107cfe41abf
         green_echo "has recovery the backup"
     fi
     echo ""
@@ -168,15 +156,9 @@ change_apt()
         then
             red_echo "already has tsinghua mirrors source!"
         else
-<<<<<<< HEAD
             sudo mv /etc/apt/sources.list /etc/apt/sources.list_backup
             sudo touch /etc/apt/sources.list
             sudo echo  -e ${apt_str} > ${filename}
-=======
-            mv /etc/apt/sources.list /etc/apt/sources.list_backup
-            touch /etc/apt/sources.list
-            echo  -e ${apt_str} > ${filename}
->>>>>>> 38a94af5892e04c79d488f1112a4c107cfe41abf
             apt-get update
             green_echo "has backup and has change apt source"     
     fi
@@ -191,11 +173,7 @@ recovery_pip()
     green_echo "do you want to recovery pip source?(y/n) [n]"
     read restr
     if [[ $restr == "y" ]] || [[ $restr == "Y" ]];then
-<<<<<<< HEAD
         sudo rm -rf $HOME/.pip/
-=======
-        rm -R $HOME/.pip/
->>>>>>> 38a94af5892e04c79d488f1112a4c107cfe41abf
         pip install update
         green_echo "has recovery the backup"
     fi
@@ -203,16 +181,10 @@ recovery_pip()
 }
 change_pip()
 {
-<<<<<<< HEAD
 
     blue_echo "using the pip source of tsinghua(only change for current user)"
     if [[ -e "$HOME/.pip/pip.conf" ]]; then
         sudo rm -rf $HOME/.pip/
-=======
-    blue_echo "using the pip source of tsinghua(only change for current user)"
-    if [[ -e "$HOME/.pip/pip.conf" ]]; then
-        rm -R $HOME/.pip/
->>>>>>> 38a94af5892e04c79d488f1112a4c107cfe41abf
     fi
 
     mkdir $HOME/.pip
@@ -230,16 +202,10 @@ change_pip()
 
 restart_net()
 {
-<<<<<<< HEAD
     sudo service NetworkManager stop
     sudo rm /var/lib/NetworkManager/NetworkManager.state
     sudo service NetworkManager start
     sleep 3
-=======
-    service NetworkManager stop
-    rm /var/lib/NetworkManager/NetworkManager.state
-    service NetworkManager start
->>>>>>> 38a94af5892e04c79d488f1112a4c107cfe41abf
     blue_echo "testing ping www.baidu.com...."
     ping www.baidu.com -c5
     echo ""
@@ -255,7 +221,6 @@ configure_git()
         red_echo "you don't install git, begin installing..."
         apt-get install git
     fi
-<<<<<<< HEAD
 
     # if [[ ! -e "/usr/bin/expect" ]];then
     #     red_echo "you don't install expect, begin installing..."
@@ -266,22 +231,10 @@ configure_git()
     read email
     red_echo "input your github username:\n(eg:https://github.com/xxx,just input xxx)"
     read username
-=======
-    if [[ ! -e "/usr/bin/expect" ]];then
-        red_echo "you don't install expect, begin installing..."
-        apt-get install expect
-    fi
-    blue_echo "this is fast configure git to synchronize local files with github Files"
-    red_echo "input your email:"
-    read email
-    # red_echo "input your github username:\n(eg:https://github.com/xxx,just input xxx)"
-    # read username
->>>>>>> 38a94af5892e04c79d488f1112a4c107cfe41abf
     # red_echo "input the dir path you want to synchronize:(absolute path)"
     # read path
     # red_echo "input yout GitHub respository want to synchronize:"
     # read respository
-<<<<<<< HEAD
     # if [[ -e "$HOME/.ssh/id_rsa" ]]; then
     #     rm "$HOME/.ssh/id_rsa"
     #     # mkdir "$HOME/.ssh/"
@@ -306,35 +259,6 @@ configure_git()
     blue_echo "if your see sth like:'Hi xxxx! You've successfully authenticated',that's successfully!"
     blue_echo "if not...maybe some error occur,you should configure git for yourself...\n"
 
-=======
-    if [[ -e "$HOME/.ssh/id_rsa" ]]; then
-        rm "$HOME/.ssh/id_rsa"
-        # mkdir "$HOME/.ssh/"
-    fi
-
-    key_path="$HOME/.ssh/id_rsa"
-    
-    ./configure_pubkey.sh $email $key_path #$username $path $respository $key_path
-    blue_echo "copy pub-key to your github:"
-    next
-    cat "$HOME/.ssh/id_rsa.pub"
-    next
-    blue_echo "if your has copy pub-key to your github ,enter to next step:"
-    read pause
-    result=`ssh -T git@github.com`
-    echo -e $result
-    read pause
-    if [[ $result=="*Permission denied*" ]]; 
-        then
-            red_echo "error!check your pub-key is copy to GitHub!\n"
-            return
-        else
-            git config --global user.name $username
-            git config --global user.email $email
-    fi
-            # git config --global user.name $username
-            # git config --global user.email $email
->>>>>>> 38a94af5892e04c79d488f1112a4c107cfe41abf
 
 
 }
