@@ -260,6 +260,26 @@ configure_git()
 
 }
 
+change_py()
+{   
+    red_echo "\nnow:"
+    file /usr/bin/python
+    blue_echo "[1]change py2 to py3"
+    blue_echo "[2]change py3 to py2"
+    red_echo "input your num:"
+    read num
+    case $num in
+        1)  sudo ln -snf /usr/bin/python3 /usr/bin/python
+            green_echo "has change to python3\n"
+        ;;
+        2)  sudo ln -snf /usr/bin/python2 /usr/bin/python
+            green_echo "has change to python2\n"
+        ;;
+        *) echo ""
+            return 0
+            ;;
+    esac
+}
 menu()
 {
     blue_echo "[*]menu:"
@@ -268,21 +288,21 @@ menu()
     blue_echo "[3]change apt source"
     blue_echo "[4]change pip source"
     blue_echo "[5]restart network"
-    blue_echo "[6]install sth"
-    blue_echo "[7]configure for git"
+    blue_echo "[6]configure for git"
+    blue_echo "[7]install sth"
+    blue_echo "[8]change python"
+    
     blue_echo "(input 'exit' to exit)"
 }
 
 menu_install()
 {
-    blue_echo "[1]pwntools"
-    blue_echo "[2]pwnGDB"
-    blue_echo "[3]pwndbg"
-    blue_echo "[4]edit gdbinit"
-    blue_echo "[5]libc for 32-bits"
-    blue_echo "[6]ROPgadget"
-    blue_echo "[7]onegadget"
-    blue_echo "[8]angr"
+    blue_echo "[1]libc for 32-bits"
+    blue_echo "[2]pwntools"
+    blue_echo "[3]pwnGDB+pwndbg"
+    blue_echo "[4]onegadget"
+    blue_echo "[5]angr"
+    blue_echo "[6]afl-fuzz"
     blue_echo "[0]return last menu"
 
 }
@@ -298,25 +318,28 @@ install_sth()
             0)  
                 return 0
             ;;
-            1) #pwntools
+            1) #libc for 32-bits
+                dpkg --add-architecture i386
+                sudo apt-get update
+                sudo apt-get pip
+                sudo apt-get -y install lib32z1 lib32ncurses5
+                sudo apt-get source libc6-dev
+
+            ;;
+            2) #pwntools
                 sudo apt-get install python-dev
                 sudo apt-get -y install python python-pip
                 sudo apt-get install python2.7 python-pip python-dev git libssl-dev libffi-dev build-essential
                 sudo pip install --upgrade pip
                 sudo pip install pwntools
             ;;
-            2) #pwnGDB
+            3) #pwnGDB+pwndbg
                 cd ~
                 git clone https://github.com/scwuaptx/Pwngdb.git 
                 cp ~/Pwngdb/.gdbinit ~/
-            ;;
-            3) #pwndbg
-                cd ~
                 git clone https://github.com/pwndbg/pwndbg
                 cd pwndbg
                 sudo ./setup.sh
-            ;;
-            4) #edit gdbinit
                 sudo rm ~/.gdbinit
                 touch ~/.gdbinit
                 echo "source ~/pwndbg/gdbinit.py" >> ~/.gdbinit
@@ -329,24 +352,22 @@ install_sth()
                 echo "end ">> ~/.gdbinit
                 echo "end ">> ~/.gdbinit
             ;;
-            5) #libc for 32-bits
-                dpkg --add-architecture i386
-                sudo apt-get update
-                sudo apt-get pip
-                sudo apt-get -y install lib32z1 lib32ncurses5
-                sudo apt-get source libc6-dev
-            ;;
-            6) #ROPgadget
-                sudo pip install capstone
-                python setup.py install
 
-            ;;
-            7) #onegadget
+            4) #onegadget
                 sudo apt install ruby
                 sudo gem install one_gadget
             ;;
-            8) #angr
-                echo "angr!"
+            5) #angr
+                mkdir ~/angr_project && cd ~/angr_project
+                sudo apt-get install python3-dev libffi-dev build-essential virtualenvwrapper
+                virtualenv --clear --no-site-packages --python=python3.5 angr_env
+                source ./angr_env/bin/activate
+                echo "alias angr_env='source ~/angr_project/angr_env/bin/activate'" > ~/.bashrc
+                pip install angr
+                green_echo "has install angr in virtual python env\nyou can use 'angr_env' to switch"
+            ;;
+            6) #afl-fuzz
+                echo "afl-fuzz!"
             ;;
             *)  red_echo 'error input!'
             ;;
@@ -371,9 +392,11 @@ choice()
             ;;
             5)  restart_net
             ;;
-            6)  install_sth
+            6)  configure_git
             ;;
-            7)  configure_git
+            7)  install_sth
+            ;;
+            8)  change_py
             ;;
             'exit')  
                 red_echo "bye bye~"
