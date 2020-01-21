@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
-#!/usr/bin/env expect
-# Description: this is 23R3F's personal linux kits(ubuntu)
-# URL: https://
+# Description: this is 23R3F's personal linux kits(ubuntu1604)
 
-# Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
@@ -95,7 +92,7 @@ welcome()
     #     echo "you should run with 'sudo ./linux_kits.sh'"
     #     exit
     # fi
-    red_echo "Welcome To Use 23R3F 's Linux Kits(ubuntu16.04)\n"
+    red_echo "Welcome To Use 23R3F 's Linux Kits(just for ubuntu16.04:p)\n"
 }
 
 add_user()
@@ -126,8 +123,7 @@ recovery_apt()
 
     read restr
     if [[ $restr == "y" ]] || [[ $restr == "Y" ]];then
-        sudo rm -f /etc/apt/sources.list
-        sudo mv /etc/apt/sources.list_backup /etc/apt/sources.list
+        sudo cp /etc/apt/sources.list_backup /etc/apt/sources.list
         green_echo "has recovery the backup"
     fi
     echo ""
@@ -181,8 +177,7 @@ recovery_pip()
 }
 change_pip()
 {
-
-    blue_echo "using the pip source of tsinghua(only change for current user)"
+    blue_echo "using the pip source of tsinghua (only change for current user)"
     if [[ -e "$HOME/.pip/pip.conf" ]]; then
         sudo rm -rf $HOME/.pip/
     fi
@@ -207,7 +202,9 @@ restart_net()
     sudo service NetworkManager start
     sleep 3
     blue_echo "testing ping www.baidu.com...."
-    ping www.baidu.com -c5
+    ping www.baidu.com -c3
+    blue_echo "testing ping www.github.com...."
+    ping www.github.com -c3
     echo ""
 }
 
@@ -368,7 +365,13 @@ install_sth()
                 green_echo "has install angr in virtual python env\nyou can use 'angr_env' to switch"
             ;;
             6) #afl-fuzz
-                echo "afl-fuzz!"
+                cd ~
+                wget http://lcamtuf.coredump.cx/afl/releases/afl-latest.tgz
+                tar -zxvf  ./afl-latest.tgz
+                rm ./afl-latest.tgz
+                cd ./afl*
+                make
+                sudo make install
             ;;
             *)  red_echo 'error input!'
             ;;
