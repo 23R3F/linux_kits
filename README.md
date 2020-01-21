@@ -16,5 +16,5 @@
 5. angr（8的版本，基于虚拟化的python3环境）
 6. afl-fuzz
 
-
-兴趣的朋友可自行添加新功能
+输入如下命令即可使用：
+wget https://raw.githubusercontent.com/23R3F/linux_kits/master/linux_kits.sh && bash linux_kits.sh
