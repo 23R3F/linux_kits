@@ -252,9 +252,11 @@ configure_git()
     git config --global user.email $email
     blue_echo "if your see sth like:'Hi xxxx! You've successfully authenticated',that's successfully!"
     blue_echo "if not...maybe some error occur,you should configure git for yourself...\n"
-
-
-
+    blue_echo "some usage for help:"
+    blue_echo "[+]for first time to synchronize local:"
+    blue_echo "1.git init\n2.git remote add origin git@github.com:yourname/yourRepo.git\n3.git pull origin master"
+    blue_echo "[+]for change loacl and synchronize to remote:"
+    blue_echo "1.git add . \n2.git commit -m sth \n3.git push origin master"
 }
 
 change_py()
