@@ -254,9 +254,13 @@ configure_git()
     blue_echo "if not...maybe some error occur,you should configure git for yourself...\n"
     blue_echo "some usage for help:"
     blue_echo "[+]for first time to synchronize local:"
-    blue_echo "1.git init\n2.git remote add origin git@github.com:yourname/yourRepo.git\n3.git pull origin master"
+    blue_echo "1.git init"
+    blue_echo "2.git remote add origin git@github.com:yourname/yourRepo.git"
+    blue_echo "3.git pull origin master"
     blue_echo "[+]for change loacl and synchronize to remote:"
-    blue_echo "1.git add . \n2.git commit -m sth \n3.git push origin master"
+    blue_echo "1.git add . "
+    blue_echo "2.git commit -m sth"
+    blue_echo "3.git push origin master"
 }
 
 change_py()
