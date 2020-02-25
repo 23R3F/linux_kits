@@ -17,4 +17,5 @@
 6. afl-fuzz
 
 输入如下命令即可使用：
-wget https://raw.githubusercontent.com/23R3F/linux_kits/master/linux_kits.sh && bash linux_kits.sh
+
+wget https://raw.githubusercontent.com/23R3F/linux_kits/master/linux_kits.sh && chmod u+x ./linux_kits.sh && ./linux_kits.sh
