@@ -338,9 +338,11 @@ install_sth()
             ;;
             3) #pwnGDB+pwndbg
                 cd ~
-                git clone https://github.com/scwuaptx/Pwngdb.git 
+                #git clone https://github.com/scwuaptx/Pwngdb.git 
+                git clone https://gitee.com/Z3R3F/Pwngdb.git
                 cp ~/Pwngdb/.gdbinit ~/
-                git clone https://github.com/pwndbg/pwndbg
+                #git clone https://github.com/pwndbg/pwndbg
+                git clone https://gitee.com/Z3R3F/pwndbg.git
                 cd pwndbg
                 sudo ./setup.sh
                 sudo rm ~/.gdbinit
