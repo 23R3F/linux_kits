@@ -374,7 +374,8 @@ install_sth()
             ;;
             6) #afl-fuzz
                 cd ~
-                wget http://lcamtuf.coredump.cx/afl/releases/afl-latest.tgz
+                #wget http://lcamtuf.coredump.cx/afl/releases/afl-latest.tgz
+                wget https://gitee.com/Z3R3F/AFl-fuzz/raw/master/afl-2.52b.tgz
                 tar -zxvf  ./afl-latest.tgz
                 rm ./afl-latest.tgz
                 cd ./afl*
